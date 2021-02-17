@@ -17,7 +17,7 @@ Global OptionFile$ = "options.ini"
 
 Include "Source Code\DevilParticleSystem.bb"
 
-Global ErrorFile$ = "error_log_"
+Global ErrorFile$ = "Error Logs\ErrorLog_"
 Local ErrorFileInd% = 0
 While FileType(ErrorFile+Str(ErrorFileInd)+".txt")<>0
 	ErrorFileInd = ErrorFileInd+1
@@ -31,6 +31,8 @@ Global ConsoleFont%
 Global VersionNumber$ = "1.3.11"
 
 Global ModVersionNumber$ = "ALPHA 1"
+
+Global BuildVersion$ = "2/--/21dev"
 
 Global DevTeamNames$ = "Keter-Class Studios"
 
@@ -3290,7 +3292,11 @@ Repeat
 		End If
 		
 		Color 255, 255, 255
-		If ShowFPS Then AASetFont ConsoleFont : AAText 20, 20, "FPS: " + FPS : AASetFont Font1
+		If ShowFPS Then AASetFont ConsoleFont : AAText 20, 80, "FPS: " + FPS : AASetFont Font1
+		
+		AASetFont ConsoleFont : AAText 20, 20, "v" + ModVersionNumber : AASetFont ConsoleFont
+		AASetFont ConsoleFont : AAText 20, 40, "Save File: " + CurrSave : AASetFont ConsoleFont
+		AASetFont ConsoleFont : AAText 20, 60, "Build: " + BuildVersion : AASetFont ConsoleFont
 		
 		DrawQuickLoading()
 		

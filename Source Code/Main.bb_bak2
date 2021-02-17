@@ -4750,9 +4750,12 @@ Function DrawGUI()
 		
 		Color 255, 255, 255	
 		Rect (x, y, width, height, False)
-		For i = 1 To Int(((width - 2) * (BlinkTimer / (BLINKFREQ))) / 10)
-			DrawImage(BlinkMeterIMG, x + 3 + 10 * (i - 1), y + 3)
-		Next	
+		If BlinkTimer < 180.0 Then
+  			Color(166, 11, 0)
+		Else
+  			Color(129, 1, 209)
+		EndIf        
+			Rect(x + 3, y + 3, Float(BlinkTimer * ((width - 6.0) / BLINKFREQ)), 14)	
 		Color 0, 0, 0
 		Rect(x - 50, y, 30, 30)
 		
@@ -4769,9 +4772,12 @@ Function DrawGUI()
 		y = GraphicHeight - 55
 		Color 255, 255, 255
 		Rect (x, y, width, height, False)
-		For i = 1 To Int(((width - 2) * (Stamina / 100.0)) / 10)
-			DrawImage(StaminaMeterIMG, x + 3 + 10 * (i - 1), y + 3)
-		Next	
+		If Stamina < 27.0 Then
+  			Color(166, 11, 0)
+		Else
+  			Color(0, 0, 255)
+		EndIf        
+			Rect(x + 3, y + 3, Float(Stamina * (width - 6.0) / 100.0), 14)    	
 		
 		Color 0, 0, 0
 		Rect(x - 50, y, 30, 30)

@@ -2731,7 +2731,7 @@ Dim DecalTextures%(20)
 Global Monitor%, MonitorTexture%
 Global CamBaseOBJ%, CamOBJ%
 
-Global LiquidObj%,MTFObj%,GuardObj%,ClassDObj%
+Global LiquidObj%,MTFObj%,GuardObj%,ClassDObj%,FGuardObj%
 Global ApacheObj%,ApacheRotorObj%
 
 Global UnableToMove% = False
@@ -7981,6 +7981,7 @@ Function LoadEntities()
 	
 	MTFObj = LoadAnimMesh_Strict("GFX\npcs\MTF2.b3d") ;optimized MTFs
 	GuardObj = LoadAnimMesh_Strict("GFX\npcs\guard.b3d") ;optimized Guards
+	FGuardObj = LoadAnimMesh_Strict("GFX\npcs\femaleguard.b3d") ;female guards
 	;GuardTex = LoadTexture_Strict("GFX\npcs\body.jpg") ;optimized the guards even more
 	
 	;If BumpEnabled Then

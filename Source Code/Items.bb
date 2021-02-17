@@ -51,6 +51,8 @@ Function CreateItemTemplate.ItemTemplates(name$, tempname$, objpath$, invimgpath
 	
 	Local texture%
 	
+	If tempname = "paper" Then texturepath = imgpath
+	
 	If texturepath <> "" Then
 		For it2.itemtemplates = Each ItemTemplates
 			If it2\texpath = texturepath And it2\tex<>0 Then

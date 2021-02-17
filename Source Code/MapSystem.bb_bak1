@@ -7371,7 +7371,6 @@ Function CreateMap()
 	MapRoom(ROOM1, 0) = "start"	
 	SetRoom("roompj", ROOM1, Floor(0.1*Float(Room1Amount[0])),min_pos,max_pos)
 	SetRoom("914", ROOM1, Floor(0.3*Float(Room1Amount[0])),min_pos,max_pos)
-	SetRoom("room1archive",ROOM1,Floor(0.5*Float(Room1Amount[0])),min_pos,max_pos)
 	SetRoom("room205", ROOM1, Floor(0.6*Float(Room1Amount[0])),min_pos,max_pos)
 	
 	MapRoom(ROOM2C, 0) = "lockroom"
@@ -7384,17 +7383,10 @@ Function CreateMap()
 	SetRoom("room2scps", ROOM2, Floor(0.2*Float(Room2Amount[0])),min_pos,max_pos)
 	SetRoom("room2storage", ROOM2, Floor(0.3*Float(Room2Amount[0])),min_pos,max_pos)
 	SetRoom("room2z1", ROOM2, Floor(0.1*Float(Room2Amount[0])), min_pos, max_pos)
-	SetRoom("room2gw_b", ROOM2, Floor(0.4*Float(Room2Amount[0])),min_pos,max_pos)
 	SetRoom("room2sl", ROOM2, Floor(0.5*Float(Room2Amount[0])),min_pos,max_pos)
-	SetRoom("room012", ROOM2, Floor(0.55*Float(Room2Amount[0])),min_pos,max_pos)
 	SetRoom("room2scps2",ROOM2,Floor(0.6*Float(Room2Amount[0])),min_pos,max_pos)
-	SetRoom("room1123",ROOM2,Floor(0.7*Float(Room2Amount[0])),min_pos,max_pos)
-	SetRoom("room2elevator",ROOM2,Floor(0.85*Float(Room2Amount[0])),min_pos,max_pos)
 	
-	
-	MapRoom(ROOM3, Floor(Rnd(0.2,0.8)*Float(Room3Amount[0]))) = "room3storage"
-	
-	MapRoom(ROOM2C, Floor(0.5*Float(Room2CAmount[0]))) = "room1162"
+	MapRoom(ROOM3, Room3Amount[0]+Floor(0.3*Float(Room3Amount[0]))) = "room3z1"
 	
 	MapRoom(ROOM4, Floor(0.3*Float(Room4Amount[0]))) = "room4info"
 	
