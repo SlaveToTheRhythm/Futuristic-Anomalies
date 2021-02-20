@@ -1799,6 +1799,7 @@ Global PauseMenuIMG%
 Global SprintIcon%
 Global BlinkIcon%
 Global CrouchIcon%
+Global HealthIcon%
 Global HandIcon%
 Global HandIcon2%
 
@@ -3674,6 +3675,7 @@ Function Kill()
 	If KillTimer >= 0 Then
 		KillAnim = Rand(0,1)
 		PlaySound_Strict(DamageSFX(0))
+		PlaySound_Strict(LoadTempSound("SFX\Character\HEV\health_dropping2.wav"))
 		If SelectedDifficulty\permaDeath Then
 			DeleteFile(CurrentDir() + SavePath + CurrSave+"\save.txt") 
 			DeleteDir(SavePath + CurrSave)
@@ -4795,6 +4797,53 @@ Function DrawGUI()
 		Else
 			DrawImage SprintIcon, x - 50, y
 		EndIf
+		
+		If (Bloodloss + Injuries) => 100 Then
+        	Kill()
+    	EndIf
+		
+		;HEALTH -ty ADMClef
+        If SelectedEnding = ""
+            If KillTimer = 0
+                AASetFont ConsoleFont
+                Color 0, 0, 0
+                AAText x + width + 21, y+1, ""+(Int(100-(Injuries+Bloodloss)))+"/100"
+                Color 255, 255, 255
+                AAText x + width + 20, y, ""+(Int(100-(Injuries+Bloodloss)))+"/100"
+            Else
+                AASetFont ConsoleFont
+                Color 0, 0, 0
+                AAText x + width + 21, y+1, "0/100"
+                Color 255, 255, 255
+                AAText x + width + 20, y, "0/100"
+            EndIf
+        EndIf
+
+		y = GraphicHeight - 135
+        Color 255, 255, 255
+        Rect (x, y, width, height, False)
+        For i = 1 To Int(20 - ((width - 2) * ((Injuries+Bloodloss) / 100.0)) / 10)
+            DrawImage(BlinkMeterIMG, x + 3 + 10 * (i - 1), y + 3)
+        Next
+
+
+        If (Injuries + Bloodloss) => 0 And (Injuries + Bloodloss) < 50.0
+            Color 0, 255, 0
+            Rect(x - 50 - 3, y - 3, 30 + 6, 30 + 6) 
+        ElseIf (Injuries + Bloodloss) => 50.0 And (Injuries + Bloodloss) < 75.0
+            Color 255, 182, 0
+            Rect(x - 50 - 3, y - 3, 30 + 6, 30 + 6)
+        ElseIf (Injuries + Bloodloss) => 75.0
+            Color 200, 0, 0
+            Rect(x - 50 - 3, y - 3, 30 + 6, 30 + 6)
+        End If
+
+        Color 255, 255, 255
+
+        Rect(x - 50 - 1, y - 1, 30 + 2, 30 + 2, False)
+
+        DrawImage HealthIcon, x - 50, y
+
 		
 		If DebugHUD Then
 			Color 255, 255, 255
@@ -6530,6 +6579,7 @@ Function DrawGUI()
 						
 						If SelectedItem\state=100 Then
 							If WearingHazmat>0 Then
+							    
 								Msg = "You removed the hazmat suit."
 								WearingHazmat = False
 								DropItem(SelectedItem)
@@ -6576,9 +6626,13 @@ Function DrawGUI()
 					If SelectedItem\state=100 Then
 						If WearingVest>0 Then
 							Msg = "You removed the vest."
+							PlaySound_Strict(LoadTempSound("SFX\Character\HEV\hev_shutdown.wav"))
+							HUDenabled = False
 							WearingVest = False
 							DropItem(SelectedItem)
 						Else
+							HUDenabled = True
+							PlaySound_Strict(LoadTempSound("SFX\Character\HEV\hev_logon.wav"))
 							If SelectedItem\itemtemplate\tempname="vest" Then
 								Msg = "You put on the vest and feel slightly encumbered."
 								WearingVest = 1
@@ -7485,14 +7539,6 @@ Function DrawMenu()
 				Case 4 ;Advanced
 					AASetFont Font1
 					;[Block]
-					y = y + 50*MenuScale
-					
-					Color 255,255,255				
-					AAText(x, y, "Show HUD:")	
-					HUDenabled = DrawTick(x + 270 * MenuScale, y + MenuScale, HUDenabled)
-					If MouseOn(x+270*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
-						DrawOptionsTooltip(tx,ty,tw,th,"hud")
-					EndIf
 					
 					y = y + 30*MenuScale
 					
@@ -7847,6 +7893,7 @@ Function LoadEntities()
 	SprintIcon% = LoadImage_Strict("GFX\sprinticon.png")
 	BlinkIcon% = LoadImage_Strict("GFX\blinkicon.png")
 	CrouchIcon% = LoadImage_Strict("GFX\sneakicon.png")
+	HealthIcon% = LoadImage_Strict("GFX\healthicon.png")
 	HandIcon% = LoadImage_Strict("GFX\handsymbol.png")
 	HandIcon2% = LoadImage_Strict("GFX\handsymbol2.png")
 

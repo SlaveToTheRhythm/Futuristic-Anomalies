@@ -79,7 +79,7 @@ ButtGhostSFX% = LoadSound_Strict("SFX\SCP\Joke\789J.ogg")
 ;Dim RadioSFX(5,10)
 RadioSFX(1,0) = LoadSound_Strict("SFX\Radio\RadioAlarm.ogg")
 RadioSFX(1,1) = LoadSound_Strict("SFX\Radio\RadioAlarm2.ogg")
-For i = 0 To 8
+For i = 0 To 1
 	RadioSFX(2,i) = LoadSound_Strict("SFX\Radio\scpradio"+i+".ogg")
 Next
 RadioSquelch = LoadSound_Strict("SFX\Radio\squelch.ogg")

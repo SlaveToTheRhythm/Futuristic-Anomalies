@@ -163,7 +163,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			n\obj = CopyEntity(FGuardObj)
 			
 			n\Speed = (GetINIFloat("DATA\NPCs.ini", "Guard", "speed") / 100.0)
-			temp# = (GetINIFloat("DATA\NPCs.ini", "Guard", "scale") / 2.5)
+			temp# = (GetINIFloat("DATA\NPCs.ini", "Guard", "scale") / 2)
 			
 			ScaleEntity n\obj, temp, temp, temp
 			
@@ -2333,7 +2333,7 @@ Function UpdateNPCs()
 				EndIf
 				
 				;[End Block]
-			Case NPCtypeGuard ;------------------------------------------------------------------------------------------------------------------
+			Case NPCtypeGuard, NPCtypeFGuard ;------------------------------------------------------------------------------------------------------------------
 				;[Block]
 				prevFrame# = n\Frame
 				
@@ -5265,7 +5265,7 @@ Function UpdateMTFUnit(n.NPCs)
                 realType = "173"
 			Case NPCtypeOldMan
                 realType = "106"
-			Case NPCtypeGuard
+			Case NPCtypeGuard,NPCtypeFGuard
                 realType = "guard"
 			Case NPCtypeD
                 realType = "d"
@@ -7155,6 +7155,10 @@ Function Console_SpawnNPC(c_input$, c_state$ = "")
 		Case "guard"
 			n.NPCs = CreateNPC(NPCtypeGuard, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
 			consoleMSG = "Guard spawned."
+			
+		Case "female guard"
+		    n.NPCs = CreateNPC(NPCtypeFGuard, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))
+			consoleMSG = "Female Guard spawned."
 			
 		Case "mtf"
 			n.NPCs = CreateNPC(NPCtypeMTF, EntityX(Collider), EntityY(Collider) + 0.2, EntityZ(Collider))

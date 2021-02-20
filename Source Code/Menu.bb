@@ -908,15 +908,6 @@ Function UpdateMainMenu()
 					height = 320 * MenuScale
 					DrawFrame(x, y, width, height)	
 					
-					y = y + 20*MenuScale
-					
-					Color 255,255,255				
-					AAText(x + 20 * MenuScale, y, "Show HUD:")	
-					HUDenabled = DrawTick(x + 310 * MenuScale, y + MenuScale, HUDenabled)
-					If MouseOn(x+310*MenuScale,y+MenuScale,20*MenuScale,20*MenuScale)
-						DrawOptionsTooltip(tx,ty,tw,th,"hud")
-					EndIf
-					
 					y=y+30*MenuScale
 					
 					Color 255,255,255

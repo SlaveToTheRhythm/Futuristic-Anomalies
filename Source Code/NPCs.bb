@@ -90,15 +90,7 @@ Function CreateNPC.NPCs(NPCtype%, x#, y#, z#)
 			EntityType n\Collider, HIT_PLAYER
 			n\Gravity = True
 			
-			n\obj = LoadMesh_Strict("GFX\npcs\173_2.b3d")
-			
-			;On Halloween set jack-o-latern texture.
-			If (Left(CurrentDate(), 7) = "31 Oct ") Then
-				HalloweenTex = True
-				Local texFestive = LoadTexture_Strict("GFX\npcs\173h.pt", 1)
-				EntityTexture n\obj, texFestive, 0, 0
-				FreeTexture texFestive
-			EndIf
+			n\obj = LoadMesh_Strict("GFX\npcs\173_1.b3d")
 			
 			temp# = (GetINIFloat("DATA\NPCs.ini", "SCP-173", "scale") / MeshDepth(n\obj))			
 			ScaleEntity n\obj, temp,temp,temp
@@ -862,6 +854,7 @@ Function UpdateNPCs()
 												End Select
 												
 												If (Not GodMode) Then n\Idle = True
+												PlaySound_Strict(LoadTempSound("SFX\Character\HEV\internal_bleeding.wav"))
 												PlaySound_Strict(NeckSnapSFX(Rand(0,2)))
 												If Rand(2) = 1 Then 
 													TurnEntity(Camera, 0, Rand(80,100), 0)
@@ -1159,6 +1152,7 @@ Function UpdateNPCs()
 											PlaySound_Strict(DamageSFX(1))
 											PlaySound_Strict(HorrorSFX(5))											
 											If PlayerRoom\RoomTemplate\Name = "pocketdimension" Then
+												PlaySound_Strict(LoadTempSound("SFX\Character\HEV\major_fracture.wav"))
 												DeathMSG = "Subject D-9341. Body partially decomposed by what is assumed to be SCP-106's "+Chr(34)+"corrosion"+Chr(34)+" effect. Body disposed of via incineration."
 												Kill()
 											Else
@@ -1185,6 +1179,7 @@ Function UpdateNPCs()
 							EndIf
 							
 							If FallTimer < -250.0 Then
+								PlaySound_Strict(LoadTempSound("SFX\Character\HEV\internal_bleeding.wav"))
 								MoveToPocketDimension()
 								n\State = 250 ;make 106 idle for a while
 							EndIf
@@ -2298,6 +2293,7 @@ Function UpdateNPCs()
 									If prevFrame < 23 And n\Frame=>23 Then
 										If EntityDistance(n\Collider,Collider)<1.1
 											If (Abs(DeltaYaw(n\Collider,Collider))<=60.0)
+												PlaySound_Strict(LoadTempSound("SFX\Character\HEV\minor_lacerations.wav"))
 												PlaySound_Strict DamageSFX(Rand(5,8))
 												Injuries = Injuries+Rnd(0.4,1.0)
 												DeathMSG = "Subject D-9341. Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-049-2."
@@ -2312,6 +2308,7 @@ Function UpdateNPCs()
 									If prevFrame < 90 And n\Frame=>90 Then
 										If EntityDistance(n\Collider,Collider)<1.1
 											If (Abs(DeltaYaw(n\Collider,Collider))<=60.0)
+												PlaySound_Strict(LoadTempSound("SFX\Character\HEV\minor_lacerations.wav"))
 												PlaySound_Strict DamageSFX(Rand(5,8))
 												Injuries = Injuries+Rnd(0.4,1.0)
 												DeathMSG = "Subject D-9341. Cause of death: multiple lacerations and severe blunt force trauma caused by an instance of SCP-049-2."
@@ -3630,6 +3627,7 @@ Function UpdateNPCs()
 								;Animate2(n\obj, AnimTime(n\obj), 451,493, 0.5, False)
 								If (prevFrame < 461 And n\Frame=>461) Then 
 									If KillTimer => 0 Then Kill() : KillAnim = 0
+									PlaySound_Strict(LoadTempSound("SFX\Character\HEV\major_lacerations.wav"))
 									PlaySound_Strict(n\Sound)
 								EndIf
 								If (prevFrame < 476 And n\Frame=>476) Then PlaySound_Strict(n\Sound2)
@@ -3782,6 +3780,7 @@ Function UpdateNPCs()
 									If temp Then
 										If Distance(n\EnemyX, n\EnemyZ, EntityX(n\Collider), EntityZ(n\Collider))<1.5 Then
 											PlaySound_Strict n\Sound2
+											PlaySound_Strict(LoadTempSound("SFX\Character\HEV\major_lacerations.wav"))
 											Injuries = Injuries + Rnd(1.5, 2.5)-WearingVest*0.5
 											BlurTimer = 500		
 										Else
@@ -3790,7 +3789,7 @@ Function UpdateNPCs()
 										EndIf
 									EndIf
 									
-									If Injuries>4.0 Then 
+									If Injuries>0.1 Then 
 										DeathMSG=Chr(34)+"All four (4) escaped SCP-939 specimens have been captured and recontained successfully. "
 										DeathMSG=DeathMSG+"Three (3) of them made quite a mess at Storage Area 6. A cleaning team has been dispatched."+Chr(34)
 										Kill()
@@ -3956,6 +3955,7 @@ Function UpdateNPCs()
 									Select Rand(1,6)
 										Case 1
 											If n\Sound2=0 Then n\Sound2=LoadSound_Strict("SFX\SCP\066\Beethoven.ogg")
+											PlaySound_Strict(LoadTempSound("SFX\Character\HEV\internal_bleeding.wav"))
 											n\SoundChn2 = PlaySound2(n\Sound2, Camera, n\Collider)
 											DeafTimer# = 70*(45+(15*SelectedDifficulty\aggressiveNPCs))
 											DeafPlayer = True
@@ -4943,6 +4943,7 @@ Function UpdateNPCs()
 							If (n\Frame => 146 And prevFrame < 146)
 								If EntityDistance(n\Collider,Collider)<1.1
 									If (Abs(DeltaYaw(n\Collider,Collider))<=60.0)
+										PlaySound_Strict(LoadTempSound("SFX\Character\HEV\minor_lacerations.wav"))
 										PlaySound_Strict DamageSFX(Rand(5,8))
 										Injuries = Injuries+Rnd(0.4,1.0)
 										Infect = Infect + (1+(1*SelectedDifficulty\aggressiveNPCs))
